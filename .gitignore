@@ -1,0 +1,30 @@
+# ── Secrets — never remove these lines ──
+.env
+*.env.local
+**/.env
+!.env.example
+
+# ── Flutter / Dart (app/) ──
+app/.dart_tool/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/.packages
+app/build/
+app/**/ios/Pods/
+app/**/android/.gradle/
+
+# ── Python (ml/) ──
+ml/**/venv/
+ml/**/__pycache__/
+ml/**/*.pyc
+ml/**/.ipynb_checkpoints/
+
+# ── Firmware (PlatformIO) ──
+firmware/.pio/
+
+# ── OS / editor cruft ──
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
