@@ -6,6 +6,7 @@ import 'screens/home_screen.dart';
 import 'screens/history_screen.dart';
 import 'screens/ai_coach_screen.dart';
 import 'screens/settings_screen.dart';
+import 'services/ble_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +21,12 @@ class ScribeSenseApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // Session/connection/db providers get added here in S1.2, S1.3, S2.2
+        // S1.2 — BLE client; single instance shared across all screens
+        Provider<BleService>(
+          create: (_) => BleService(),
+          dispose: (_, svc) => svc.dispose(),
+        ),
+        // S1.3, S2.2 — db / session providers added here next
       ],
       child: MaterialApp(
         title: 'ScribeSense',
