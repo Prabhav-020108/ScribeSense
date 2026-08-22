@@ -42,7 +42,8 @@ class DbService {
   /// the first call.
   static Future<Database> get instance async {
     if (_db != null) return _db!;
-    final dbPath = _pathOverride ?? join(await getDatabasesPath(), 'scribesense.db');
+    final dbPath =
+        _pathOverride ?? join(await getDatabasesPath(), 'scribesense.db');
     _db = await openDatabase(
       dbPath,
       version: _dbVersion,

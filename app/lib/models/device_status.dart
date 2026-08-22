@@ -20,8 +20,8 @@ class DeviceStatus {
 
   factory DeviceStatus.fromJson(Map<String, dynamic> json) {
     return DeviceStatus(
-      batteryMv:       (json['battery_mv']      as num).toInt(),
-      fwVersion:        json['fw_version']        as String,
+      batteryMv: (json['battery_mv'] as num).toInt(),
+      fwVersion: json['fw_version'] as String,
       bufferedSamples: (json['buffered_samples'] as num).toInt(),
     );
   }

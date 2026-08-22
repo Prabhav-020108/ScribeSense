@@ -6,9 +6,7 @@ class AiCoachScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Text('AI Coach — built out in S5'),
-      ),
+      body: Center(child: Text('AI Coach — built out in S5')),
     );
   }
 }

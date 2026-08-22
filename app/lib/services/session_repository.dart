@@ -1,4 +1,4 @@
-﻿// lib/services/session_repository.dart
+// lib/services/session_repository.dart
 //
 // The ONLY class allowed to touch raw SQL in the ScribeSense app.
 // All callers (providers, screens) go through this class — never through
@@ -74,11 +74,11 @@ class SessionRepository {
   }) async {
     final db = await DbService.instance;
     await db.insert('classifications', {
-      'session_id':   sessionId,
+      'session_id': sessionId,
       'window_start': windowStart,
-      'window_end':   windowEnd,
-      'label':        label,
-      'confidence':   confidence,
+      'window_end': windowEnd,
+      'label': label,
+      'confidence': confidence,
     });
   }
 
@@ -134,13 +134,16 @@ class SessionRepository {
     );
     for (final s in older) {
       final sid = s['id'] as int;
-      await db.rawDelete('''
+      await db.rawDelete(
+        '''
         DELETE FROM samples
         WHERE session_id = ?
           AND id NOT IN (
             SELECT id FROM samples WHERE session_id = ? AND (id % 50) = 0
           )
-      ''', [sid, sid]);
+      ''',
+        [sid, sid],
+      );
     }
   }
 }

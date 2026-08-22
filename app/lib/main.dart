@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'screens/home_screen.dart';
 import 'screens/history_screen.dart';
 import 'screens/ai_coach_screen.dart';
 import 'screens/settings_screen.dart';
+import 'providers/session_provider.dart';
 import 'services/ble_service.dart';
 
 Future<void> main() async {
@@ -26,7 +28,10 @@ class ScribeSenseApp extends StatelessWidget {
           create: (_) => BleService(),
           dispose: (_, svc) => svc.dispose(),
         ),
-        // S1.3, S2.2 — db / session providers added here next
+        ChangeNotifierProxyProvider<BleService, SessionProvider>(
+          create: (ctx) => SessionProvider(ctx.read<BleService>()),
+          update: (ctx, ble, previous) => previous ?? SessionProvider(ble),
+        ),
       ],
       child: MaterialApp(
         title: 'ScribeSense',

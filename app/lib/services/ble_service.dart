@@ -1,15 +1,17 @@
 // lib/services/ble_service.dart
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+
 import '../models/sensor_sample.dart';
 import '../models/device_status.dart';
 
 class BleService {
-  static const serviceUuid        = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+  static const serviceUuid = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
   static const sensorDataCharUuid = "4fafc202-1fb5-459e-8fcc-c5c9c331914b";
-  static const controlCharUuid    = "4fafc203-1fb5-459e-8fcc-c5c9c331914b";
-  static const statusCharUuid     = "4fafc204-1fb5-459e-8fcc-c5c9c331914b";
+  static const controlCharUuid = "4fafc203-1fb5-459e-8fcc-c5c9c331914b";
+  static const statusCharUuid = "4fafc204-1fb5-459e-8fcc-c5c9c331914b";
 
   final _sampleController = StreamController<SensorSample>.broadcast();
   Stream<SensorSample> get sensorStream => _sampleController.stream;
@@ -38,7 +40,9 @@ class BleService {
     _connectionStateController.add('scanning');
     try {
       await FlutterBluePlus.startScan(
-        withServices: [Guid(serviceUuid)], // filter by Service UUID, never by name (task 2)
+        withServices: [
+          Guid(serviceUuid),
+        ], // filter by Service UUID, never by name (task 2)
         timeout: const Duration(seconds: 10),
       );
 
@@ -76,19 +80,19 @@ class BleService {
 
     await _connSub?.cancel();
     _connSub = _device!.connectionState.listen((state) {
-      if (state == BluetoothConnectionState.disconnected && !_isManualDisconnect) {
+      if (state == BluetoothConnectionState.disconnected &&
+          !_isManualDisconnect) {
         _connectionStateController.add('disconnected');
         _reconnectWithBackoff();
       }
     });
 
-    await _device!.connect(
-      license: License.nonprofit,
-      autoConnect: false,
-    );
+    await _device!.connect(license: License.nonprofit, autoConnect: false);
 
     try {
-      await _device!.requestMtu(247); // matches integration-contract.md's MTU note
+      await _device!.requestMtu(
+        247,
+      ); // matches integration-contract.md's MTU note
     } catch (_) {
       // Non-fatal if MTU request is rejected/unsupported
     }

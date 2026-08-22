@@ -7,7 +7,9 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Settings — parent delete-all-data control per Charter §10'),
+        child: Text(
+          'Settings — parent delete-all-data control per Charter §10',
+        ),
       ),
     );
   }
